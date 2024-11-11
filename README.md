@@ -8,9 +8,10 @@ This repository contains a test automation framework for both UI and API testing
 - [Prerequisites](#prerequisites)
 - [Project Structure](#project-structure)
 - [Setup & Installation](#setup--installation)
-- [UI Test Automation with Playwright](#ui-test-automation-with-playwright)
-- [API Test Automation with Axios](#api-test-automation-with-axios)
-- [Running the Tests](#running-the-tests)
+- [Running Tests](#running-tests)
+- [Generating Tests Reports](#generating-tests-reports)
+- [Test Cases Approach](#test-cases-approach)
+
 
 ## Introduction
 
@@ -131,7 +132,7 @@ Here it is described the approach test cases design.
 ### API test:
 **Test objective**: Validate functionality of POST v2/orders and get v2/sims endpoints
 Test Scenarios**: 
-  - TC1: 
+- TC1: 
   
   Steps:
   1. Call POST /token
@@ -141,7 +142,7 @@ Test Scenarios**:
 - access_token is not undefined
 - token is valid (current time in seconds is less then token expiration time).
   
-  - TC2: 
+- TC2: 
   
   Precondition:
   1. Call POST token
