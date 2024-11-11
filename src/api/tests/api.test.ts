@@ -1,19 +1,24 @@
 import { test, expect } from '@playwright/test';
-import { ApiClient } from '../api-client';
+import { ApiClient } from '../requests/api-client';
+import { AxiosResponse } from 'axios';
 
 const apiClient = new ApiClient();
 
 test.describe('Api Tests', () => {
 
+  let postTokenResponse: AxiosResponse
+
+  test.beforeAll(async () => {
+      postTokenResponse = await apiClient.postToken()
+  });
+
   test('POST /token request should return 200', async () => {
-    const response = await apiClient.postToken()
-    expect(response.status).toEqual(200);
-    expect(response.data.data.access_token).not.toBeUndefined()
-    expect(apiClient.isTokenValid(response.data.data)).toBeTruthy()
+    expect(postTokenResponse.status).toEqual(200);
+    expect(postTokenResponse.data.data.access_token).not.toBeUndefined()
+    expect(apiClient.isTokenValid(postTokenResponse.data.data)).toBeTruthy()
   });
 
   test('POST /orders request should return 200', async () => {
-    const response = await apiClient.postToken()
     const body = {
       quantity: '6',
       package_id: 'merhaba-7days-1gb',
@@ -21,7 +26,7 @@ test.describe('Api Tests', () => {
       type: 'sim'
     }
 
-    const responsePostOrder = await apiClient.postOrder(response.data.data, body)
+    const responsePostOrder = await apiClient.postOrder(postTokenResponse.data.data, body)
     expect(responsePostOrder.status).toEqual(200);
     const responseData = responsePostOrder.data.data
     expect(responseData.sims.length).toBe(6)
@@ -33,8 +38,7 @@ test.describe('Api Tests', () => {
     
   });
 
-  test('GET eSims list should return 200', async () => {
-    const response = await apiClient.postToken()
+  test('GET /sims list should return 200', async () => {
     const body = {
       quantity: '6',
       package_id: 'merhaba-7days-1gb',
@@ -42,7 +46,7 @@ test.describe('Api Tests', () => {
       type: 'sim'
     }
 
-    const token = response.data.data
+    const token = postTokenResponse.data.data
 
     await apiClient.postOrder(token, body)
 
