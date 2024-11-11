@@ -138,10 +138,10 @@ Test Scenarios**:
   1. Call POST /token
 
   Expected results:
-- Response status is 200
-- access_token is not undefined
-- token is valid (current time in seconds is less then token expiration time).
-  
+1. Response status is 200
+2. access_token is not undefined
+3. token is valid (current time in seconds is less then token expiration time).
+    
 - TC2: 
   
   Precondition:
@@ -151,13 +151,14 @@ Test Scenarios**:
   1. Call POST /order
   
   Expected results:
-  - response status is 200
-  - number of sims in response is 6
-  - package_id is merhaba-7days-1gb 
-  - esim type is prepaid
-  - each sim in the response has one non-empty id (sim id is truthy)
+  1. response status is 200
+  2. number of sims in response is 6
+  3. package_id is merhaba-7days-1gb 
+  4. esim type is prepaid
+  5. each sim in the response has one non-empty id (sim id is truthy)
 
 - TC3: 
+
   Precondition:
   1. Call POST token
   
@@ -166,8 +167,8 @@ Test Scenarios**:
   2. Call GET /sims
 
   Expected results:
-  - response status is 200
-  - for each sim in the response: id is non-empty, is_roaming is true and iccid is non-empty
+  1. response status is 200
+  2. for each sim in the response: id is non-empty, is_roaming is true and iccid is non-empty
   
 - **Technical implementation**: Developed client using Axios and developed http requests in api-client.ts file. Logic to check if token is valid happens inside the http request itself to keep the test file only of requests calls and validations.
 - **Environment**: Chromium was considered the default browser for test execution. For checking the compatibility, test can be run for webkit and firefox browsers as well.. 
